@@ -4,17 +4,17 @@
 
 <h1>Hello, {{ user.name }}</h1>
 {% for list in lists %}
-    <h2>{{ list['title'] }}</h2>
+    <h2>{{ list.title }}</h2>
     {% if list['ordered'] %}
         <ol>
-            {% for item in list['items'] %}
-                <li>{{ item }}</li>
+            {% for item in list.items %}
+                <li>{{ item.text }}</li>
             {% endfor %}
         </ol>
     {% else %}
         <ul>
-            {% for item in list['items'] %}
-                <li>{{ item }}</li>
+            {% for item in list.items %}
+                <li>{{ item.text }}</li>
             {% endfor %}
         </ul>
     {% endif %}

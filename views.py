@@ -1,24 +1,27 @@
 from flask import render_template, flash, redirect
 from app import app
 from forms import LoginForm
+from models import TodoList
 
 
 @app.route('/')
 @app.route('/index')
 def index():
     user = {'name': 'Jordan'}  # fake user
-    lists = [
-        {'author': {'name': 'Jordan'},
-         'title': 'Shopping List',
-         'items': ['Eggs', 'Milk'],
-         'ordered': False
-         },
-        {'author': {'name': 'Jordan'},
-         'title': 'Schedule',
-         'items': ['Eat', 'Sleep'],
-         'ordered': True
-         }
-        ]
+    # lists = [
+    #     {'author': {'name': 'Jordan'},
+    #      'title': 'Shopping List',
+    #      'items': ['Eggs', 'Milk'],
+    #      'ordered': False
+    #      },
+    #     {'author': {'name': 'Jordan'},
+    #      'title': 'Schedule',
+    #      'items': ['Eat', 'Sleep'],
+    #      'ordered': True
+    #      }
+    #     ]
+
+    lists = TodoList.query.all()
 
     return render_template('index.html',
                            title='Home',
