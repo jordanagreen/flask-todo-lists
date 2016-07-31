@@ -1,31 +1,23 @@
-<html>
-    <head>
-        {% if title %}
-            <title>{{ title }} - Todo List</title>
-        {% else %}
-           <title>Todo List</title>
-        {% endif %}
-    </head>
-    <body>
-        <h1>Hello, {{ user.name }}</h1>
-    {% for list in lists %}
-        <h2>{{ list['title'] }}</h2>
-        {% if list['ordered'] %}
-            <ol>
-                {% for item in list['items'] %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ol>
-        {% else %}
-            <ul>
-                {% for item in list['items'] %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+{% extends "base.html" %}
 
+{% block content %}
 
-    {% endfor %}
+<h1>Hello, {{ user.name }}</h1>
+{% for list in lists %}
+    <h2>{{ list['title'] }}</h2>
+    {% if list['ordered'] %}
+        <ol>
+            {% for item in list['items'] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <ul>
+            {% for item in list['items'] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}
 
-    </body>
-</html>
+{% endblock %}

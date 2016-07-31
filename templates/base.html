@@ -1,0 +1,24 @@
+<html>
+    <head>
+        {% if title %}
+            <title>{{ title }} - Todo List</title>
+        {% else %}
+           <title>Todo List</title>
+        {% endif %}
+    </head>
+    <body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <p><a href="login">Log in</a></p>
+{% block content %}
+{% endblock %}
+
+    </body>
+</html>
