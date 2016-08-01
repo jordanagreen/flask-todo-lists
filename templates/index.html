@@ -3,24 +3,13 @@
 {% block content %}
 
 {% if current_user.is_authenticated %}
-<h1>Hello, {{ user.name }}</h1>
+    <h1>Hello, {{ user.name }}</h1>
+    <h2>My Lists</h2>
+    {% for list in user.lists %}
+        <a href="{{ url_for('show_list', id=list.id) }}">{{ list.title }}</a><br>
+    {% endfor %}
+{% else %}
+    <h1>Log in to view your lists</h1>
 {% endif %}
-
-{% for list in lists %}
-    <h2>{{ list.title }}</h2>
-    {% if list.is_ordered %}
-        <ol>
-            {% for item in list.items %}
-                <li>{{ item.text }}</li>
-            {% endfor %}
-        </ol>
-    {% else %}
-        <ul>
-            {% for item in list.items %}
-                <li>{{ item.text }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endfor %}
 
 {% endblock %}

@@ -13,18 +13,18 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'name': 'Jordan'}  # fake user
-    lists = TodoList.query.all()
     return render_template('index.html',
                            title='Home',
-                           user=user,
-                           lists=lists)
+                           user=g.user)
 
 
-@app.route('/lists')
+@app.route('/list/<id>')
 @login_required
-def lists():
-    pass
+def show_list(id):
+    l = TodoList.query.get(id)
+    return render_template('list.html',
+                           title=l.title,
+                           list=l)
 
 
 @app.route('/login', methods=['GET', 'POST'])
