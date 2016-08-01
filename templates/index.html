@@ -2,11 +2,9 @@
 
 {% block content %}
 
+{% if current_user.is_authenticated %}
 <h1>Hello, {{ user.name }}</h1>
-
-    {% if current_user.is_authenticated %}
-    <h1>Logged in {{ current_user.name }}!</h1>
-    {% endif %}
+{% endif %}
 
 {% for list in lists %}
     <h2>{{ list.title }}</h2>

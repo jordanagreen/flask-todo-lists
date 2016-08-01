@@ -1,8 +1,8 @@
-from flask import render_template, flash, redirect, request, abort, url_for
+from flask import render_template, flash, redirect, request, abort, url_for, g
 from app import app, login_manager
 from forms import LoginForm
 from models import User, TodoList
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required, current_user
 
 
 @login_manager.user_loader
@@ -21,11 +21,24 @@ def index():
                            lists=lists)
 
 
+@app.route('/lists')
+@login_required
+def lists():
+    pass
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    def next_is_valid(next):
+        return True
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(name=form.name.data).first()
+        if user is None: # user doesn't exist
+            flash('Invalid username.')
+            return render_template('login.html',
+                                   title='Sign in',
+                                   form=form)
         login_user(user, remember=form.remember_me.data)
         flash('Login for name %s, remember=%s' %
               (form.name.data, form.remember_me.data))
@@ -38,5 +51,12 @@ def login():
                            form=form)
 
 
-def next_is_valid(next):
-    return True
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
+@app.before_request
+def before_request():
+    g.user = current_user
